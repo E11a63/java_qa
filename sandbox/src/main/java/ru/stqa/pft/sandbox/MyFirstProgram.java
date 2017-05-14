@@ -11,6 +11,9 @@ public class MyFirstProgram {
 
     Rectangle r = new Rectangle(4, 6);
     System.out.println("Площадь прямоугольника со сторонами " + r.a + " и " + r.b + " = " + r.area ());
+
+    Rectangle n = new Rectangle(5, 8);
+    System.out.println("Площадь прямоугольника со сторонами " + n.a + " и " + n.b + " = " + n.area ());
   }
 public static void hello(String somebody ){
 
