@@ -4,20 +4,16 @@ package ru.stqa.pft.task1;
 public class Point {
 public double x;
 public double y;
-public double z;
-public double w;
 
 
-
-public Point (double x, double y, double z, double w) {
+public Point (double x, double y) {
 this.x = x;
 this.y = y;
-this.z = z;
-this.w = w;
+
 
 }
-  public double metodx() {
-    return Math.sqrt (((this.z - this.x)*(this.z - this.x))+((this.w-this.y)*(this.w-this.y)));
+  public double  distance(Point p2) {
+    return Math.sqrt (((p2.x - x)*(p2.x - x))+((p2.y - y)*(p2.y - y)));
   }
 
 }
