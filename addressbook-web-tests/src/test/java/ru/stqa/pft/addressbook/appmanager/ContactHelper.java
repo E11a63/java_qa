@@ -5,11 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.ContactsData;
 
-public class ContactHelper {
-  private FirefoxDriver wd;
+public class ContactHelper extends HelperBase {
 
   public ContactHelper(FirefoxDriver wd){
-    this.wd = wd;
+    super(wd);
+
   }
 
   public void creationNewContacts() {
@@ -77,7 +77,7 @@ public class ContactHelper {
   }
 
   public void addNewContacts() {
-    wd.findElement(By.linkText("add new")).click();
+    click(By.linkText("add new"));
   }
 
   public void delitionContractElemtnt() {
@@ -85,6 +85,6 @@ public class ContactHelper {
   }
 
   public void selectContactElement() {
-    wd.findElement(By.name("selected[]")).click();
+    click(By.name("selected[]"));
   }
 }
