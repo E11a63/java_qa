@@ -30,6 +30,8 @@ public class GroupCreationTests {
     login("admin", "secret");
   }
 
+
+
   private void login(String username, String password) {
     wd.findElement(By.name("pass")).click();
     wd.findElement(By.name("pass")).sendKeys("\\undefined");
