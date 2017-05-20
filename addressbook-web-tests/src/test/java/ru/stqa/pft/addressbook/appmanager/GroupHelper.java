@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import static ru.stqa.pft.addressbook.appmanager.ApplicationManager.wd;
-
 
 public class GroupHelper {
   private FirefoxDriver wd;

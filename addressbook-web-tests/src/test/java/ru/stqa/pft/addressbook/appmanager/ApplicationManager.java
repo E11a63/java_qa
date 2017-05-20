@@ -10,9 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 
 
-public class ApplicationManager extends ContactHelper{
-  static FirefoxDriver wd;
-
+public class ApplicationManager {
+  private FirefoxDriver wd;
+  private SessionHelper SessionHelper;
+  private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
 
 
@@ -30,23 +31,11 @@ public class ApplicationManager extends ContactHelper{
    wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
    wd.get("http://localhost/addressbook");
     groupHelper = new GroupHelper(wd);
-    login("admin", "secret");
+    navigationHelper = new NavigationHelper(wd);
+    SessionHelper = new SessionHelper(wd);
+    SessionHelper.login("admin", "secret");
   }
 
-  private void login(String username, String password) {
-
-    wd.findElement(By.name("user")).click();
-    wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys(username);
-    wd.findElement(By.name("pass")).click();
-   wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys(password);
-    wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
-  }
-
-  public void gotoGroupPage() {
-    wd.findElement(By.linkText("groups")).click();
-  }
 
   public void viewNewcreateContacts() {
     wd.findElement(By.linkText("home")).click();
@@ -138,5 +127,9 @@ public class ApplicationManager extends ContactHelper{
 
   public GroupHelper getGroupHelper() {
     return groupHelper;
+  }
+
+  public NavigationHelper getNavigationHelper() {
+    return navigationHelper;
   }
 }
