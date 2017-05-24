@@ -61,7 +61,7 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.name("email2")).sendKeys(contactsData.getEmail2());
     wd.findElement(By.name("homepage")).click();
     wd.findElement(By.name("homepage")).clear();
-    wd.findElement(By.name("homepage")).sendKeys(contactsData.getHomepage());
+
     if (!wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[1]")).isSelected()) {
       wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[1]")).click();
     }
@@ -93,6 +93,15 @@ public class ContactHelper extends HelperBase {
   }
 
   public void submitContactModification() {
-    wd.findElement(By.xpath("//div[@id='content']/form[1]/input[22]")).click ();
+    wd.findElement(By.xpath("//div[@id='content']/form[1]/input[22]")).click();
+  }
+
+  public void clouseWindow() {
+
+    wd.switchTo().alert().accept();
+  }
+
+  public void acceptAlert() {
+      wd.switchTo().alert().accept();
   }
 }

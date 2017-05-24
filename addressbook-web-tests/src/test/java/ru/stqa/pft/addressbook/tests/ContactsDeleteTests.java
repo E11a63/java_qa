@@ -10,5 +10,8 @@ public class ContactsDeleteTests extends TestsBase {
     app.viewNewcreateContacts();
     app.getContactHelper().selectContactElement();
     app.getContactHelper().delitionContractElemtnt();
+    app.getContactHelper().acceptAlert();
+    app.viewNewcreateContacts();
   }
+
 }

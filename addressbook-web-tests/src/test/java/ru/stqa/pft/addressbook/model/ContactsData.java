@@ -91,7 +91,7 @@ public class ContactsData {
     return email2;
   }
 
-  public String getHomepage() {
-    return homepage;
-  }
+
 }
+
+
