@@ -1,24 +1,40 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.BrowserType;
 
 import java.util.concurrent.TimeUnit;
 
 
 public class ApplicationManager {
-  public FirefoxDriver wd;
+  public WebDriver wd;
 
   private ContactHelper contactHelper;
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
+  private String browser;
+
+  public ApplicationManager(String browser) {
+    this.browser = browser;
+  }
 
 
   public void init() {
-    wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary("D:\\Java_QA\\Mozilla Firefox\\firefox_for.exe"));
-    wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+
+    if (browser == BrowserType.FIREFOX) {
+      wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary("D:\\Java_QA\\Mozilla Firefox\\firefox_for.exe"));
+    } else if (browser==BrowserType.CHROME){
+      wd = new ChromeDriver ();
+    } else if (browser==BrowserType.IE){
+wd= new InternetExplorerDriver();
+}
+wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook");
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
@@ -51,4 +67,6 @@ public class ApplicationManager {
   public ContactHelper getContactHelper() {
     return contactHelper;
   }
+
+
 }

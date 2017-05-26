@@ -2,12 +2,13 @@ package ru.stqa.pft.addressbook.appmanager;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.ContactsData;
 
 public class ContactHelper extends HelperBase {
 
-  public ContactHelper(FirefoxDriver wd) {
+  public ContactHelper(WebDriver wd) {
     super(wd);
 
   }
@@ -96,12 +97,8 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.xpath("//div[@id='content']/form[1]/input[22]")).click();
   }
 
-  public void clouseWindow() {
+  public void acceptAlert() {
 
     wd.switchTo().alert().accept();
-  }
-
-  public void acceptAlert() {
-      wd.switchTo().alert().accept();
   }
 }
