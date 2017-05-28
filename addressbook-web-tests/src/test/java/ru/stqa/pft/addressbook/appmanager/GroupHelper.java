@@ -3,6 +3,9 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import ru.stqa.pft.addressbook.model.ContactsData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 
@@ -24,6 +27,7 @@ public class GroupHelper extends HelperBase{
     type(By.name("group_name"), groupData.getName());
     type(By.name("group_header"), groupData.getHeader());
     type(By.name("group_footer"), groupData.getFooter());
+
   }
 
   public void initGroupCreation() {
