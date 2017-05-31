@@ -10,12 +10,14 @@ public class ContactCreationTests extends TestsBase {
   public void testContactCreation() {
     app.navigationHelper.gotoHomePage(app);
     app.searchForm();
-    if (!app.getGroupHelper().isThereAGroup()) {
+    app.getNavigationHelper().gotoGroupPage();
+    if (!app.wd.getPageSource().contains("title=\"Select (name)\"")) {
       app.getGroupHelper().createGroup(new GroupData("name", null, null));
-      app.navigationHelper.gotoHomePage(app);
-      app.getContactHelper().createContact(new ContactsData("Первый", "Первович", "Первов", "Нет", "1", "2", "3", "4.1", "4.2", "4.3", "4.4", "5.2", "5.3", "5.2", "6", "name"));
-      //app.getContactHelper().acceptAlert();
-      app.navigationHelper.gotoHomePage(app);
     }
+    app.navigationHelper.gotoHomePage(app);
+    app.getContactHelper().createContact(new ContactsData("Первый", "Первович", "Первов", "Нет", "1", "2", "3", "4.1", "4.2", "4.3", "4.4", "5.2", "5.3", "5.2", "6", "name"));
+    //app.getContactHelper().acceptAlert();
+    app.navigationHelper.gotoHomePage(app);
   }
 }
+
