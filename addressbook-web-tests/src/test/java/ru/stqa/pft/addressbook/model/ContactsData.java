@@ -1,6 +1,8 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactsData {
+  private static String group;
+  private  int id;
   private final String name;
   private final String mname;
   private final String lname;
@@ -16,9 +18,9 @@ public class ContactsData {
   private final String email3;
   private final String email2;
   private final String homepage;
-  private static String group;
 
-  public ContactsData(String name, String mname, String lname, String nickname, String title, String company, String adress, String hometel, String mobiltel, String worktel, String fax, String email, String email3, String email2, String homepage, String group) {
+  public ContactsData(int id, String name, String mname, String lname, String nickname, String title, String company, String adress, String hometel, String mobiltel, String worktel, String fax, String email, String email3, String email2, String homepage, String group) {
+    this.id = id;
     this.name = name;
     this.mname = mname;
     this.lname = lname;
@@ -35,6 +37,34 @@ public class ContactsData {
     this.email2 = email2;
     this.homepage = homepage;
     this.group = group;
+  }
+
+  public ContactsData(String name, String mname, String lname, String nickname, String title, String company, String adress, String hometel, String mobiltel, String worktel, String fax, String email, String email3, String email2, String homepage, String group) {
+    this.id = 0;
+    this.name = name;
+    this.mname = mname;
+    this.lname = lname;
+    this.nickname = nickname;
+    this.title = title;
+    this.company = company;
+    this.adress = adress;
+    this.hometel = hometel;
+    this.mobiltel = mobiltel;
+    this.worktel = worktel;
+    this.fax = fax;
+    this.email = email;
+    this.email3 = email3;
+    this.email2 = email2;
+    this.homepage = homepage;
+    this.group = group;
+  }
+
+  public static String getGroup() {
+    return group;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public String getName() {
@@ -93,10 +123,40 @@ public class ContactsData {
     return email2;
   }
 
+  @Override
+  public String toString() {
+    return "ContactsData{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", lname='" + lname + '\'' +
+            '}';
+  }
 
-  public static String getGroup() {
-    return group;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactsData that = (ContactsData) o;
+
+    if (id != that.id) return false;
+    if (name != null ? !name.equals(that.name) : that.name != null) return false;
+    return lname != null ? lname.equals(that.lname) : that.lname == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id;
+    result = 31 * result + (name != null ? name.hashCode() : 0);
+    result = 31 * result + (lname != null ? lname.hashCode() : 0);
+    return result;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 }
+
+
 
 

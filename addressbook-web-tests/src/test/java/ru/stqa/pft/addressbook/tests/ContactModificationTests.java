@@ -4,6 +4,10 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactsData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class ContactModificationTests extends TestsBase {
   @Test
@@ -13,13 +17,19 @@ public class ContactModificationTests extends TestsBase {
       app.getContactHelper().createContact(new ContactsData("Первый", "Первович", "Первов", "Нет", "1", "2", "3", "4.1", "4.2", "4.3", "4.4", "5.2", "5.3", "5.2", "6", "name"));
       app.navigationHelper.gotoHomePage(app);
     }
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContactElement();
+    List<ContactsData> before = app.getContactHelper().getContactslist();
+    app.getContactHelper().selectContactElement(before.size() -1);
     app.getContactHelper().initContactModification();
-    app.getContactHelper().fillContactsForm(new ContactsData("Первый", "Первович", "Первов", "Нет", "1", "2", "3", "4.1", "4.2", "4.3", "4.4", "5.2", "5.3", "5.2", "6", null), false);
+    ContactsData contact = new ContactsData(before.get(before.size() -1).getId(),"Первый", "Первович", "Первов", "Нет", "1", "2", "3", "4.1", "4.2", "4.3", "4.4", "5.2", "5.3", "5.2", "6", null);
+    app.getContactHelper().fillContactsForm(contact, false);
     app.getContactHelper().submitContactModification();
     app.navigationHelper.gotoHomePage(app);
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before);
+    List<ContactsData> after = app.getContactHelper().getContactslist();
+    Assert.assertEquals(after.size(), before.size());
+
+    before.remove(before.size()-1);
+    before.add(contact);
+    Assert.assertEquals (new HashSet<Object>(before),new HashSet<Object>(after));
+
   }
 }
