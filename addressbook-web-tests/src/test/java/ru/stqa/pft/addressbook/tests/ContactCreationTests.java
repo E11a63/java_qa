@@ -27,22 +27,12 @@ public class ContactCreationTests extends TestsBase {
     List<ContactsData> after = app.getContactHelper().getContactslist();
     Assert.assertEquals(after.size(), before.size() + 1);
 
+    contact.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     before.add(contact);
-
-    Assert.assertEquals (new HashSet<Object>(before),new HashSet<Object>(after));
-
-    int max =0;
-    for (ContactsData c : after){
-      if (c.getId() > max) {
-        max = c.getId();
-      }
-    }
-    contact.setId(max);
-    before.add(contact);
-    Assert.assertEquals (new HashSet<Object>(before),new HashSet<Object>(after));
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
 
-  }
+}
 
 
 
