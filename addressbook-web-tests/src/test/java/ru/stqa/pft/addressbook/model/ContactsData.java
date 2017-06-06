@@ -40,7 +40,7 @@ public class ContactsData {
   }
 
   public ContactsData(String name, String mname, String lname, String nickname, String title, String company, String adress, String hometel, String mobiltel, String worktel, String fax, String email, String email3, String email2, String homepage, String group) {
-    this.id = 0;
+    this.id = Integer.MAX_VALUE;
     this.name = name;
     this.mname = mname;
     this.lname = lname;
@@ -139,15 +139,13 @@ public class ContactsData {
 
     ContactsData that = (ContactsData) o;
 
-    if (id != that.id) return false;
     if (name != null ? !name.equals(that.name) : that.name != null) return false;
     return lname != null ? lname.equals(that.lname) : that.lname == null;
   }
 
   @Override
   public int hashCode() {
-    int result = id;
-    result = 31 * result + (name != null ? name.hashCode() : 0);
+    int result = name != null ? name.hashCode() : 0;
     result = 31 * result + (lname != null ? lname.hashCode() : 0);
     return result;
   }
