@@ -133,11 +133,12 @@ public class ContactHelper extends HelperBase {
 
   public List<ContactsData> getContactslist() {
     List<ContactsData> contacts = new ArrayList<ContactsData>();
-    List<WebElement> elements = wd.findElements(By.xpath("#maintable>tbody>tr>td")); // найти локатор для чекбокса
+    List<WebElement> elements = wd.findElements(By.xpath("//tr[contains(@name,\"entry\")]"));
     for (WebElement element : elements) {
-      String name = element.getText();
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("alt")); // найти ФИО
-      ContactsData contact = new ContactsData(id, name, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+      String name = element.findElement(By.xpath("./td[3]")).getText();
+      String lname = element.findElement(By.xpath("./td[2]")).getText();
+      ContactsData contact = new ContactsData( id,name, null, lname, null, null, null, null, null, null, null, null, null, null, null, null, null);
       contacts.add(contact);
     }
       return contacts;
