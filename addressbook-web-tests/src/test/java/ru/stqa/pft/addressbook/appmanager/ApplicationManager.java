@@ -13,10 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
   public WebDriver wd;
-
+  public NavigationHelper navigationHelper;
   private ContactHelper contactHelper;
   private SessionHelper sessionHelper;
-  public NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
   private String browser;
 
@@ -29,12 +28,12 @@ public class ApplicationManager {
 
     if (browser.equals(BrowserType.FIREFOX)) {
       wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary("D:\\Java_QA\\Mozilla Firefox\\firefox_for.exe"));
-    } else if (browser.equals(BrowserType.CHROME)){
-      wd = new ChromeDriver ();
-    } else if (browser.equals(BrowserType.IE)){
-wd= new InternetExplorerDriver();
-}
-wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+    } else if (browser.equals(BrowserType.CHROME)) {
+      wd = new ChromeDriver();
+    } else if (browser.equals(BrowserType.IE)) {
+      wd = new InternetExplorerDriver();
+    }
+    wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook");
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);

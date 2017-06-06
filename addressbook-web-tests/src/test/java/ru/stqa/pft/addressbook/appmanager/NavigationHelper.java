@@ -3,9 +3,8 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class NavigationHelper extends HelperBase{
+public class NavigationHelper extends HelperBase {
 
 
   public NavigationHelper(WebDriver wd) {
@@ -14,8 +13,8 @@ public class NavigationHelper extends HelperBase{
 
   public void gotoGroupPage() {
     if (isElementPresent(By.tagName("h1"))
-            && wd.findElement(By.tagName("h1")).getText(). equals("Gruops")
-            && isElementPresent(By.name("new"))){
+            && wd.findElement(By.tagName("h1")).getText().equals("Gruops")
+            && isElementPresent(By.name("new"))) {
       return;
     }
     click(By.linkText("groups"));
@@ -26,7 +25,7 @@ public class NavigationHelper extends HelperBase{
   public void gotoHomePage(ApplicationManager applicationManager) {
     if (isElementPresent(By.id("maintable"))) {
       return;
-  }
+    }
     applicationManager.wd.findElement(By.linkText("home")).click();
   }
 
