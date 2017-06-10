@@ -5,32 +5,29 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactsData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTests extends TestsBase {
 
   @Test
   public void testContactCreation() {
-    List<ContactsData> before = app.contact().list();
     app.goTo().HomePage(app);
+    Set<ContactsData> before = app.contact().all();
     app.searchForm();
     app.goTo().groupPage();
     if (!app.wd.getPageSource().contains("title=\"Select (name)\"")) {
       app.group().create(new GroupData().withName("name"));
     }
     app.goTo().HomePage(app);
-    ContactsData contact = new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").withGroup("name");
+    ContactsData contact = new ContactsData()
+            .withName("Первый").withMname("Первович").withLname("Первов").withGroup("name");
     app.contact().create(contact);
-    //app.getContactHelper().acceptAlert();
     app.goTo().HomePage(app);
-    List<ContactsData> after = app.contact().list();
+    Set<ContactsData> after = app.contact().all();
     Assert.assertEquals(after.size(), before.size() + 1);
 
+    contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
     before.add(contact);
-    Comparator<? super ContactsData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 

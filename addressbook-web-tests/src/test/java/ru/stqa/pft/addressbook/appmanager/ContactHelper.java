@@ -8,8 +8,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactsData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -71,16 +72,6 @@ public class ContactHelper extends HelperBase {
     if (!wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[1]")).isSelected()) {
       wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[1]")).click();
     }
-    wd.findElement(By.name("address2")).click();
-    wd.findElement(By.name("address2")).clear();
-    wd.findElement(By.name("address2")).sendKeys("7");
-    wd.findElement(By.name("phone2")).click();
-    wd.findElement(By.name("phone2")).clear();
-    wd.findElement(By.name("phone2")).sendKeys("8");
-    wd.findElement(By.name("notes")).click();
-    wd.findElement(By.name("notes")).clear();
-    wd.findElement(By.name("notes")).sendKeys("9");
-
 
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(ContactsData.getGroup());
@@ -93,16 +84,24 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void delitionContractElemtnt() {
+  public void delitionContact() {
     wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
   }
 
-  public void selectContactElement(int index) {
+  public void selectContact(int index) {
     wd.findElements(By.name("selected[]")).get(index).click();
+  }
+
+  public void selectContactByID(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
   public void initContactModification(int index) {
     wd.findElements(By.xpath(".//td[8]")).get(index).click();
+  }
+
+  public void initContactModificationByID(int id) {
+    wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
   }
 
   public void submitContactModification() {
@@ -119,15 +118,16 @@ public class ContactHelper extends HelperBase {
     fillContactsForm(contact, true);
     creationNewContacts();
   }
-  public void modify(int index, ContactsData contact) {
-    initContactModification(index);
+
+  public void modify(ContactsData contact) {
+    initContactModificationByID(contact.getId());
     fillContactsForm(contact, false);
     submitContactModification();
   }
-  public void delete(int index) {
-    selectContactElement(index);
-    delitionContractElemtnt();
-    acceptAlert();
+
+  public void delete(ContactsData contact) {
+    selectContactByID(contact.getId());
+    delitionContact();
   }
 
   public boolean isThereAContact() {
@@ -138,17 +138,17 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactsData> list() {
-    List<ContactsData> contacts = new ArrayList<ContactsData>();
+  public Set<ContactsData> all() {
+    Set<ContactsData> contacts = new HashSet<ContactsData>();
     List<WebElement> elements = wd.findElements(By.xpath("//tr[contains(@name,\"entry\")]"));
     for (WebElement element : elements) {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
       String name = element.findElement(By.xpath("./td[3]")).getText();
       String lname = element.findElement(By.xpath("./td[2]")).getText();
-      contacts.add(new ContactsData ().withId(id). withName(name).withLname(lname));
+      contacts.add(new ContactsData().withId(id).withName(name).withLname(lname));
     }
     return contacts;
+
   }
+
 }
-
-

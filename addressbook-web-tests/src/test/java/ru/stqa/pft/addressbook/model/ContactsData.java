@@ -32,6 +32,7 @@ public class ContactsData {
     this.id = id;
     return this;
   }
+
   public ContactsData withGroup(String group) {
     ContactsData.group = group;
     return this;
@@ -185,6 +186,7 @@ public class ContactsData {
 
     ContactsData that = (ContactsData) o;
 
+    if (id != that.id) return false;
     if (name != null ? !name.equals(that.name) : that.name != null) return false;
     return lname != null ? lname.equals(that.lname) : that.lname == null;
   }
@@ -193,6 +195,7 @@ public class ContactsData {
   public int hashCode() {
     int result = name != null ? name.hashCode() : 0;
     result = 31 * result + (lname != null ? lname.hashCode() : 0);
+    result = 31 * result + id;
     return result;
   }
 }
