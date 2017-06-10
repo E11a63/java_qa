@@ -11,7 +11,7 @@ public class NavigationHelper extends HelperBase {
     super(wd);
   }
 
-  public void gotoGroupPage() {
+  public void groupPage() {
     if (isElementPresent(By.tagName("h1"))
             && wd.findElement(By.tagName("h1")).getText().equals("Gruops")
             && isElementPresent(By.name("new"))) {
@@ -22,7 +22,7 @@ public class NavigationHelper extends HelperBase {
   }
 
 
-  public void gotoHomePage(ApplicationManager applicationManager) {
+  public void HomePage(ApplicationManager applicationManager) {
     if (isElementPresent(By.id("maintable"))) {
       return;
     }

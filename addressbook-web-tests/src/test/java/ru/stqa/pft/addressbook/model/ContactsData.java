@@ -2,21 +2,21 @@ package ru.stqa.pft.addressbook.model;
 
 public class ContactsData {
   private static String group;
-  private final String name;
-  private final String mname;
-  private final String lname;
-  private final String nickname;
-  private final String title;
-  private final String company;
-  private final String adress;
-  private final String hometel;
-  private final String mobiltel;
-  private final String worktel;
-  private final String fax;
-  private final String email;
-  private final String email3;
-  private final String email2;
-  private final String homepage;
+  private String name;
+  private String mname;
+  private String lname;
+  private String nickname;
+  private String title;
+  private String company;
+  private String adress;
+  private String hometel;
+  private String mobiltel;
+  private String worktel;
+  private String fax;
+  private String email;
+  private String email3;
+  private String email2;
+  private String homepage;
   private int id;
 
   public ContactsData(int id, String name, String mname, String lname, String nickname, String title, String company, String adress, String hometel, String mobiltel, String worktel, String fax, String email, String email3, String email2, String homepage, String group) {

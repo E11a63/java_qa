@@ -114,10 +114,20 @@ public class ContactHelper extends HelperBase {
     wd.switchTo().alert().accept();
   }
 
-  public void createContact(ContactsData contact) {
+  public void create(ContactsData contact) {
     addNewContacts();
     fillContactsForm(contact, true);
     creationNewContacts();
+  }
+  public void modify(int index, ContactsData contact) {
+    initContactModification(index);
+    fillContactsForm(contact, false);
+    submitContactModification();
+  }
+  public void delete(int index) {
+    selectContactElement(index);
+    delitionContractElemtnt();
+    acceptAlert();
   }
 
   public boolean isThereAContact() {
@@ -128,7 +138,7 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactsData> getContactslist() {
+  public List<ContactsData> list() {
     List<ContactsData> contacts = new ArrayList<ContactsData>();
     List<WebElement> elements = wd.findElements(By.xpath("//tr[contains(@name,\"entry\")]"));
     for (WebElement element : elements) {
