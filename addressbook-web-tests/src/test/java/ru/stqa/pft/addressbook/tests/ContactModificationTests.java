@@ -14,7 +14,7 @@ public class ContactModificationTests extends TestsBase {
   public void ensurePreconditions() {
     app.goTo().HomePage(app);
     if (app.contact().list().size()==0) {
-      app.contact().create(new ContactsData("Первый", "Первович", "Первов", "Нет", "1", "2", "3", "4.1", "4.2", "4.3", "4.4", "5.2", "5.3", "5.2", "6", "name"));
+      app.contact().create(new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").withGroup("name"));
       app.goTo().HomePage(app);
     }
   }
@@ -23,7 +23,7 @@ public class ContactModificationTests extends TestsBase {
   public void testContactModification() {
     List<ContactsData> before = app.contact().list();
     int index = before.size() - 1;
-    ContactsData contact = new ContactsData(before.get(index).getId(), "Первый", "Первович", "Первов", "Нет", "1", "2", "3", "4.1", "4.2", "4.3", "4.4", "5.2", "5.3", "5.2", "6", null);
+    ContactsData contact = new ContactsData().withId(before.get(index).getId()). withName("Первый").withMname("Первович").withLname("Первов");
     app.contact().modify(index, contact);
     app.goTo().HomePage(app); // уточнить класс помощник
     List<ContactsData> after = app.contact().list();
