@@ -1,18 +1,19 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.ContactsData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestsBase {
 
   @Test
   public void testContactCreation() {
     app.goTo().HomePage(app);
-    Set<ContactsData> before = app.contact().all();
+    Contacts before = app.contact().all();
     app.searchForm();
     app.goTo().groupPage();
     if (!app.wd.getPageSource().contains("title=\"Select (name)\"")) {
@@ -23,12 +24,12 @@ public class ContactCreationTests extends TestsBase {
             .withName("Первый").withMname("Первович").withLname("Первов").withGroup("name");
     app.contact().create(contact);
     app.goTo().HomePage(app);
-    Set<ContactsData> after = app.contact().all();
-    Assert.assertEquals(after.size(), before.size() + 1);
+    Contacts after = app.contact().all();
+    assertThat(after.size(), equalTo(before.size() + 1));
 
-    contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
-    before.add(contact);
-    Assert.assertEquals(before, after);
+    assertThat(before, equalTo(
+            after.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+
   }
 
 }
