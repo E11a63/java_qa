@@ -8,12 +8,15 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.ContactsData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class ContactHelper extends HelperBase {
+
+  private Contacts contactCache = null;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
@@ -118,17 +121,20 @@ public class ContactHelper extends HelperBase {
     addNewContacts();
     fillContactsForm(contact, true);
     creationNewContacts();
+    contactCache = null;
   }
 
   public void modify(ContactsData contact) {
     initContactModificationByID(contact.getId());
     fillContactsForm(contact, false);
     submitContactModification();
+    contactCache = null;
   }
 
   public void delete(ContactsData contact) {
     selectContactByID(contact.getId());
     delitionContact();
+    contactCache = null;
   }
 
   public boolean isThereAContact() {
@@ -140,16 +146,17 @@ public class ContactHelper extends HelperBase {
   }
 
   public Contacts all() {
-    Contacts contacts = new Contacts ();
-    List<WebElement> elements = wd.findElements(By.xpath("//tr[contains(@name,\"entry\")]"));
-    for (WebElement element : elements) {
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-      String name = element.findElement(By.xpath("./td[3]")).getText();
-      String lname = element.findElement(By.xpath("./td[2]")).getText();
-      contacts.add(new ContactsData().withId(id).withName(name).withLname(lname));
+    if (contactCache != null) {
+      return new Contacts(contactCache);
     }
-    return contacts;
-
+      contactCache = new Contacts();
+      List<WebElement> elements = wd.findElements(By.xpath("//tr[contains(@name,\"entry\")]"));
+      for (WebElement element : elements) {
+        int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+        String name = element.findElement(By.xpath("./td[3]")).getText();
+        String lname = element.findElement(By.xpath("./td[2]")).getText();
+        contactCache.add(new ContactsData().withId(id).withName(name).withLname(lname));
+      }
+      return new Contacts(contactCache);
+    }
   }
-
-}
