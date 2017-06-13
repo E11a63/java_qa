@@ -24,14 +24,33 @@ public class ContactCreationTests extends TestsBase {
             .withName("Первый").withMname("Первович").withLname("Первов").withGroup("name");
     app.contact().create(contact);
     app.goTo().HomePage(app);
+    assertThat(app.group().count(), equalTo(before.size()+1 ));
     Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(before.size() + 1));
-
-    assertThat(before, equalTo(
-            after.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+    assertThat(app.contact().count(), equalTo(before.size()+1));
+    //assertThat(before, equalTo(after.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
 
   }
+  @Test
+  public void testBadContactCreation() {
+    app.goTo().HomePage(app);
+    Contacts before = app.contact().all();
+    app.searchForm();
+    app.goTo().groupPage();
+    if (!app.wd.getPageSource().contains("title=\"Select (name)\"")) {
+      app.group().create(new GroupData().withName("name"));
+    }
+    app.goTo().HomePage(app);
+    ContactsData contact = new ContactsData()
+            .withName("Первый'").withMname("Первович").withLname("Первов").withGroup("name");
+    app.contact().create(contact);
+    app.goTo().HomePage(app);
+    assertThat(app.contact().count(), equalTo(before.size()));
+    Contacts after = app.contact().all();
+    assertThat(after.size(), equalTo(before.size()));
 
+
+
+  }
 }
 
 

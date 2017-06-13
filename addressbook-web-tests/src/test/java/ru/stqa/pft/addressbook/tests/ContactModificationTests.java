@@ -33,10 +33,9 @@ public class ContactModificationTests extends TestsBase {
             withId(modifiedContact.getId()).withName("Первый").withMname("Первович").withLname("Первов");
     app.contact().modify(contact);
     app.goTo().HomePage(app); // уточнить класс помощник
+    assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
     assertEquals(after.size(), before.size());
 
-
-    assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
 }

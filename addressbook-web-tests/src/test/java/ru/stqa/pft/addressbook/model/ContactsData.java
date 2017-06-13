@@ -2,13 +2,13 @@ package ru.stqa.pft.addressbook.model;
 
 public class ContactsData {
   private static String group;
-  private String name;
+  private String firstName;
   private String mname;
   private String lname;
   private String nickname;
   private String title;
   private String company;
-  private String adress;
+  private String address;
   private String hometel;
   private String mobiltel;
   private String worktel;
@@ -33,13 +33,30 @@ public class ContactsData {
     return this;
   }
 
+  public ContactsData withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
   public ContactsData withGroup(String group) {
     ContactsData.group = group;
     return this;
   }
+  public ContactsData withHomePhone(String hometel) {
+    this.hometel = hometel;
+    return this;
+  }
+  public ContactsData withMobilePhone(String mobiltel) {
+    this.mobiltel = mobiltel;
+    return this;
+  }
+  public ContactsData withWorkPhone(String worktel) {
+    this.worktel = worktel;
+    return this;
+  }
 
   public ContactsData withName(String name) {
-    this.name = name;
+    this.firstName = name;
     return this;
   }
 
@@ -68,8 +85,8 @@ public class ContactsData {
     return this;
   }
 
-  public ContactsData withAdress(String adress) {
-    this.adress = adress;
+  public ContactsData withHomeAddress(String address) {
+    this.address = address;
     return this;
   }
 
@@ -115,7 +132,7 @@ public class ContactsData {
 
 
   public String getName() {
-    return name;
+    return firstName;
   }
 
   public String getMname() {
@@ -138,8 +155,8 @@ public class ContactsData {
     return company;
   }
 
-  public String getAdress() {
-    return adress;
+  public String getAddress() {
+    return address;
   }
 
   public String getHometel() {
@@ -174,7 +191,7 @@ public class ContactsData {
   public String toString() {
     return "ContactsData{" +
             "id=" + id +
-            ", name='" + name + '\'' +
+            ", name='" + firstName + '\'' +
             ", lname='" + lname + '\'' +
             '}';
   }
@@ -187,13 +204,13 @@ public class ContactsData {
     ContactsData that = (ContactsData) o;
 
     if (id != that.id) return false;
-    if (name != null ? !name.equals(that.name) : that.name != null) return false;
+    if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
     return lname != null ? lname.equals(that.lname) : that.lname == null;
   }
 
   @Override
   public int hashCode() {
-    int result = name != null ? name.hashCode() : 0;
+    int result = firstName != null ? firstName.hashCode() : 0;
     result = 31 * result + (lname != null ? lname.hashCode() : 0);
     result = 31 * result + id;
     return result;
