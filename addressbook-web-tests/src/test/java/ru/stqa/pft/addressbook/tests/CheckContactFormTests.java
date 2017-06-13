@@ -5,6 +5,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactsData;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -23,12 +27,17 @@ public class CheckContactFormTests extends TestsBase {
     app.goTo().HomePage(app);
     ContactsData contact = app.contact().all().iterator().next();
     ContactsData contactInfoFromEditionForm = app.contact().infoFromEditionForm(contact);
-    assertThat(contact.getHometel(), equalTo(cleanedPhone (contactInfoFromEditionForm.getHometel())));
-    assertThat(contact.getMobiltel(), equalTo(cleanedPhone (contactInfoFromEditionForm.getMobiltel())));
-    assertThat(contact.getWorktel(), equalTo(cleanedPhone (contactInfoFromEditionForm.getWorktel())));
+    assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditionForm)));
   }
 
-  public String cleanedPhone (String phone) {
+  private String mergePhones(ContactsData contact) {
+    return Arrays.asList(contact.getHometel(), contact.getMobiltel(), contact.getWorktel())
+            .stream().filter((s) -> ! s.equals(""))
+            .map(CheckContactFormTests::cleanedPhone)
+            .collect(Collectors.joining("\n"));
+  }
+
+  public static String cleanedPhone (String phone) {
   return phone.replaceAll("\\s","").replaceAll("[-()]","");
   }
 
@@ -38,11 +47,17 @@ public class CheckContactFormTests extends TestsBase {
     app.goTo().HomePage(app);
     ContactsData contact = app.contact().all().iterator().next();
     ContactsData contactInfoFromEditionForm = app.contact().infoFromEditionForm(contact);
-    assertThat(contact.getEmail(), equalTo(cleanedEmail (contactInfoFromEditionForm.getEmail())));
-    assertThat(contact.getEmail2(), equalTo(cleanedEmail (contactInfoFromEditionForm.getEmail2())));
-    assertThat(contact.getEmail3(), equalTo(cleanedEmail (contactInfoFromEditionForm.getEmail3())));
+    assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditionForm)));
   }
-  public String cleanedEmail (String email) {
+
+  private String mergeEmails(ContactsData contact) {
+    return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
+            .stream().filter((s) -> ! s.equals(""))
+            .map(CheckContactFormTests::cleanedEmail)
+            .collect(Collectors.joining("\n"));
+  }
+
+  public static String cleanedEmail (String email) {
     return email.replaceAll("\\s","").replaceAll("[-()]","");
   }
 

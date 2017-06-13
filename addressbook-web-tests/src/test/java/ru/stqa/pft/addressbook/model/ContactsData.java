@@ -18,6 +18,8 @@ public class ContactsData {
   private String email2;
   private String homepage;
   private int id = Integer.MAX_VALUE;
+  private String allPhones;
+  private String allEmails;
 
 
   public static String getGroup() {
@@ -214,6 +216,24 @@ public class ContactsData {
     result = 31 * result + (lname != null ? lname.hashCode() : 0);
     result = 31 * result + id;
     return result;
+  }
+
+  public String getAllPhones() {
+    return allPhones;
+  }
+
+  public ContactsData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
+
+  public String getAllEmails() {
+    return allEmails;
+  }
+
+  public ContactsData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return  this;
   }
 }
 

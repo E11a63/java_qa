@@ -11,8 +11,6 @@ import ru.stqa.pft.addressbook.model.ContactsData;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
 public class ContactHelper extends HelperBase {
 
   private Contacts contactCache = null;
@@ -148,20 +146,20 @@ public class ContactHelper extends HelperBase {
     if (contactCache != null) {
       return new Contacts(contactCache);
     }
-      contactCache = new Contacts();
-      List<WebElement> elements = wd.findElements(By.xpath("//tr[contains(@name,\"entry\")]"));
-      for (WebElement element : elements) {
-        int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-        String lname = element.findElement(By.xpath("./td[2]")).getText();
-        String name = element.findElement(By.xpath("./td[3]")).getText();
-        String[] phones = element.findElement(By.xpath("./td[6]")).getText().split("\n");
-        String[] emails = element.findElement(By.xpath("./td[5]")).getText().split("\n");
-        String addresses = element.findElement(By.xpath("./td[4]")).getText();
-        contactCache.add(new ContactsData().withId(id).withName(name).withLname(lname)
-                .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]).withEmail(emails[0]).withEmail2(emails[1]).withEmail3(emails[2]));
-      }
-      return new Contacts(contactCache);
+    contactCache = new Contacts();
+    List<WebElement> elements = wd.findElements(By.xpath("//tr[contains(@name,\"entry\")]"));
+    for (WebElement element : elements) {
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+      String lname = element.findElement(By.xpath("./td[2]")).getText();
+      String name = element.findElement(By.xpath("./td[3]")).getText();
+      String allPhones = element.findElement(By.xpath("./td[6]")).getText();
+      String allEmails = element.findElement(By.xpath("./td[5]")).getText();
+      String addresses = element.findElement(By.xpath("./td[4]")).getText();
+      contactCache.add(new ContactsData().withId(id).withName(name).withLname(lname).withHomeAddress(addresses)
+              .withAllPhones(allPhones).withAllEmails(allEmails));
     }
+    return new Contacts(contactCache);
+  }
 
   public ContactsData infoFromEditionForm(ContactsData contact) {
     initContactModificationByID(contact.getId());
