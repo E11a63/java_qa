@@ -53,22 +53,15 @@ public class CheckContactFormTests extends TestsBase {
   private String mergeEmails(ContactsData contact) {
     return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
             .stream().filter((s) -> ! s.equals(""))
-            .map(CheckContactFormTests::cleanedEmail)
             .collect(Collectors.joining("\n"));
   }
 
-  public static String cleanedEmail (String email) {
-    return email.replaceAll("\\s","").replaceAll("[-()]","");
-  }
 
   @Test
   public void testContactAddress() {
     app.goTo().HomePage(app);
     ContactsData contact = app.contact().all().iterator().next();
     ContactsData contactInfoFromEditionForm = app.contact().infoFromEditionForm(contact);
-    assertThat(contact.getAddress(), equalTo(cleanedAddress (contactInfoFromEditionForm.getAddress())));
-  }
-  public String cleanedAddress (String address) {
-    return address.replaceAll("[-()]","");
+    assertThat(contact.getAddress(), equalTo(contactInfoFromEditionForm.getAddress()));
   }
 }
