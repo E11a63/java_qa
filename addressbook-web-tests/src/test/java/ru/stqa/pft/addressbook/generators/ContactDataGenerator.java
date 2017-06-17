@@ -1,6 +1,8 @@
 package ru.stqa.pft.addressbook.generators;
 
+import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
 import ru.stqa.pft.addressbook.model.ContactsData;
 
 import java.io.File;
@@ -15,16 +17,23 @@ import java.util.List;
  */
 public class ContactDataGenerator {
   @Parameter (names = "-c", description = "contact count")
-  public int count;
+   int count;
   @Parameter (names = "-f", description = "Target file")
-  public String file;
+   String file;
 
-  public static void main(String[] args) throws IOException {
-    int count = Integer.parseInt(args[0]);
-    File file = new File(args[1]);
+  public static void main(String... args) throws IOException {
+    ContactDataGenerator generator = new ContactDataGenerator();
 
-    List<ContactsData> contacts = generateContacts(count);
-    save(contacts, file);
+    JCommander jc = JCommander.newBuilder()
+            .addObject(generator)
+            .build();
+    try {
+      jc.parse(args);
+    } catch (ParameterException ex) {
+      jc.usage();
+      return;
+    }
+    generator.run();
   }
 
 
@@ -44,6 +53,11 @@ public class ContactDataGenerator {
       writer.write(String.format("%s;%s;%s\n", contact.getName(), contact.getLname(), contact.getMname()));
     }
     writer.close();
+  }
+  public void run() throws IOException {
+
+    List<ContactsData> groups = generateContacts(count);
+    save(groups, new File(file));
   }
 }
 

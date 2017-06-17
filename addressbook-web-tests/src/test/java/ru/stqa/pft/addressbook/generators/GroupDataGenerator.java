@@ -15,26 +15,23 @@ import java.util.List;
 
 public class GroupDataGenerator {
   @Parameter(names = "-c", description = "group count")
-  public int count;
+    int count;
   @Parameter(names = "-f", description = "Target file")
-  public String file;
+   String file;
 
-  public  void main(String... args) throws IOException {
+  public static void main(String... args) throws IOException {
     GroupDataGenerator generator = new GroupDataGenerator();
+
+    JCommander jc = JCommander.newBuilder()
+            .addObject(generator)
+            .build();
     try {
-      JCommander.newBuilder()
-              .addObject(generator)
-              .build()
-              .parse(args);
-    }
-    catch (ParameterException ex){
-      JCommander.usage();
+      jc.parse(args);
+    } catch (ParameterException ex) {
+      jc.usage();
+      return;
     }
     generator.run();
-
-    int count = Integer.parseInt(args[0]);
-    File file = new File(args[1]);
-
   }
 
   private List<GroupData> generateGroups(int count) {
@@ -60,6 +57,5 @@ public class GroupDataGenerator {
 
     List<GroupData> groups = generateGroups(count);
     save(groups, new File(file));
-    System.out.printf("%d %d", count, file);
   }
 }
