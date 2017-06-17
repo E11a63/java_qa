@@ -6,7 +6,10 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.ContactsData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,14 +20,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTests extends TestsBase {
 
   @DataProvider
-  public Iterator<Object[]> validContacts() {
+  public Iterator<Object[]> validContacts() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
-    list.add(new Object[]{new ContactsData().withName("ДатаПровайдер1").withLname("ДатаПровайдеров1").withMname("ДатаПровайдерович1")});
-    list.add(new Object[]{new ContactsData().withName("ДатаПровайдер2").withLname("ДатаПровайдеров2").withMname("ДатаПровайдерович2")});
-    list.add(new Object[]{new ContactsData().withName("ДатаПровайдер3").withLname("ДатаПровайдеров3").withMname("ДатаПровайдерович3")});
-
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
+    String line  = reader.readLine();
+    while (line != null){
+      String[] split = line.split(";");
+      list.add(new Object[]{new ContactsData().withName(split[0]).withMname(split[1]).withLname(split[2])});
+      line = reader.readLine();
+    }
     return list.iterator();
-
 
   }
 
