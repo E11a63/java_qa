@@ -1,7 +1,7 @@
 package ru.stqa.pft.addressbook.generators;
 
+import com.beust.jcommander.Parameter;
 import ru.stqa.pft.addressbook.model.ContactsData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,6 +14,11 @@ import java.util.List;
  * Created on 17.06.2017.
  */
 public class ContactDataGenerator {
+  @Parameter (names = "-c", description = "contact count")
+  public int count;
+  @Parameter (names = "-f", description = "Target file")
+  public String file;
+
   public static void main(String[] args) throws IOException {
     int count = Integer.parseInt(args[0]);
     File file = new File(args[1]);
