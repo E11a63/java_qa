@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactsData;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -13,6 +12,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class CheckContactFormTests extends TestsBase {
+  public static String cleanedPhone(String phone) {
+    return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
+  }
+
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().HomePage(app);
@@ -32,15 +35,10 @@ public class CheckContactFormTests extends TestsBase {
 
   private String mergePhones(ContactsData contact) {
     return Arrays.asList(contact.getHometel(), contact.getMobiltel(), contact.getWorktel())
-            .stream().filter((s) -> ! s.equals(""))
+            .stream().filter((s) -> !s.equals(""))
             .map(CheckContactFormTests::cleanedPhone)
             .collect(Collectors.joining("\n"));
   }
-
-  public static String cleanedPhone (String phone) {
-  return phone.replaceAll("\\s","").replaceAll("[-()]","");
-  }
-
 
   @Test
   public void testContactEmails() {
@@ -52,7 +50,7 @@ public class CheckContactFormTests extends TestsBase {
 
   private String mergeEmails(ContactsData contact) {
     return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
-            .stream().filter((s) -> ! s.equals(""))
+            .stream().filter((s) -> !s.equals(""))
             .collect(Collectors.joining("\n"));
   }
 
