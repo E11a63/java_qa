@@ -41,7 +41,7 @@ public class ContactDataGenerator {
     List<ContactsData> contacts = new ArrayList<ContactsData>();
     for (int i = 0; i < count; i++) {
       contacts.add(new ContactsData().withFirstName(String.format("Генератор %s", i))
-              .withLname(String.format("Генераторов %s", i)).withMname(String.format("Генераторович %s", i)));
+              .withLname(String.format("Генераторов %s", i))/*.withMname(String.format("Генераторович %s", i))*/.withGroup(String.format("name")).withPhoto(new File(String.format(String.valueOf(new File("src/test/resources/kat.jpg"))))));
 
     }
     return contacts;
@@ -50,7 +50,7 @@ public class ContactDataGenerator {
   private static void save(List<ContactsData> contacts, File file) throws IOException {
     Writer writer = new FileWriter(file);
     for (ContactsData contact : contacts) {
-      writer.write(String.format("%s;%s;%s\n", contact.getName(), contact.getLname(), contact.getMname()));
+      writer.write(String.format("%s;%s;%s;%s\n", contact.getName(), contact.getLname(),/* contact.getMname(),*/contact.getGroup(),contact.getPhoto()));
     }
     writer.close();
   }

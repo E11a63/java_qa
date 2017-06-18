@@ -89,6 +89,7 @@ public class ContactHelper extends HelperBase {
     addNewContacts();
     fillContactsForm(contact, true);
     creationNewContacts();
+
     contactCache = null;
   }
 

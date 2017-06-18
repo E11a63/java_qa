@@ -26,7 +26,8 @@ public class ContactCreationTests extends TestsBase {
     String line  = reader.readLine();
     while (line != null){
       String[] split = line.split(";");
-      list.add(new Object[]{new ContactsData().withName(split[0]).withMname(split[1]).withLname(split[2])});
+      list.add(new Object[]{new ContactsData().withName(split[0])
+              /*.withMname(split[1])*/.withLname(split[1]).withGroup(split[2]).withPhoto(new File((split[3])))});
       line = reader.readLine();
     }
     return list.iterator();
@@ -38,16 +39,16 @@ public class ContactCreationTests extends TestsBase {
     app.goTo().HomePage(app);
     Contacts before = app.contact().all();
     app.searchForm();
-    app.goTo().groupPage();
-    if (!app.wd.getPageSource().contains("title=\"Select (name)\"")) {
-      app.group().create(new GroupData().withName("name"));
-    }
+//    app.goTo().groupPage();
+//    if (!app.wd.getPageSource().contains("title=\"Select (name)\"")) {
+//      app.group().create(new GroupData().withName("name"));
+//    }
     app.goTo().HomePage(app);
     File photo = new File("src/test/resources/kat.jpg");
     app.contact().create(contact);
     app.goTo().HomePage(app);
-    assertThat(app.contact().count(), equalTo(before.size()+1));
     Contacts after = app.contact().all();
+    assertThat(app.contact().count(), equalTo(before.size()+1));
     assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
 
   }
