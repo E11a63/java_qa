@@ -45,8 +45,8 @@ public class ContactDataGenerator {
   private static List<ContactsData> generateContacts(int count) {
     List<ContactsData> contacts = new ArrayList<ContactsData>();
     for (int i = 0; i < count; i++) {
-      contacts.add(new ContactsData().withFirstName(String.format("Генератор %s", i))
-              .withLname(String.format("Генераторов %s", i))/*.withMname(String.format("Генераторович %s", i))*/.withGroup("name")
+      contacts.add(new ContactsData().withFirstName(String.format("Generetor %s", i))
+              .withLname(String.format("Generatorov %s", i))/*.withMname(String.format("Генераторович %s", i))*/.withGroup("name")
               .withPhoto(new File("src/test/resources/kat.jpg")));
 
     }
@@ -54,11 +54,12 @@ public class ContactDataGenerator {
   }
 
   private static void saveAsCsv(List<ContactsData> contacts, File file) throws IOException {
-    Writer writer = new FileWriter(file);
-    for (ContactsData contact : contacts) {
-      writer.write(String.format("%s;%s;%s;%s\n", contact.getName(), contact.getLname(),/* contact.getMname(),*/contact.getGroup(), contact.getPhoto()));
+    System.out.println(new File(".").getAbsolutePath());
+    try (Writer writer = new FileWriter(file)) {
+      for (ContactsData contact : contacts){
+        writer.write(String.format("%s;%s;%s;%s\n", contact.getName(), contact.getLname(),/* contact.getMname(),*/contact.getGroup(), contact.getPhoto()));
+      }
     }
-    writer.close();
   }
 
   public void run() throws IOException {
@@ -79,19 +80,18 @@ public class ContactDataGenerator {
     XStream xstream = new XStream();
     xstream.processAnnotations(ContactsData.class);
     String xml = xstream.toXML(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try (Writer writer = new FileWriter(file)){
+      writer.write(xml);
+    }
   }
 
   private void saveAsJson(List<ContactsData> contacts, File file) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     String json = gson.toJson(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 }
-
 
 
