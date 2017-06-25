@@ -56,7 +56,7 @@ public class ContactCreationTests extends TestsBase {
 
   public void testContactCreation(ContactsData contact) {
     app.goTo().HomePage(app);
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     app.searchForm();
     app.goTo().groupPage();
     if (!app.wd.getPageSource().contains("title=\"Select (name)\"")) {
@@ -66,7 +66,7 @@ public class ContactCreationTests extends TestsBase {
     File photo = new File("src/test/resources/kat.jpg");
     app.contact().create(contact);
     app.goTo().HomePage(app);
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
@@ -74,7 +74,7 @@ public class ContactCreationTests extends TestsBase {
   @Test(enabled = false)
   public void testBadContactCreation() {
     app.goTo().HomePage(app);
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     app.searchForm();
     app.goTo().groupPage();
     if (!app.wd.getPageSource().contains("title=\"Select (name)\"")) {
@@ -86,7 +86,7 @@ public class ContactCreationTests extends TestsBase {
     app.contact().create(contact);
     app.goTo().HomePage(app);
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after.size(), equalTo(before.size()));
 
   }

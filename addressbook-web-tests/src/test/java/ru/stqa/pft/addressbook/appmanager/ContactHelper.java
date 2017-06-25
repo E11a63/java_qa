@@ -39,7 +39,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactsData.getEmail());
     type(By.name("email3"), contactsData.getEmail3());
     type(By.name("email2"), contactsData.getEmail2());
-    attach(By.name("photo"), contactsData.getPhoto());
+//    attach(By.name("photo"), contactsData.getPhoto());
 
     if (!wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[1]")).isSelected()) {
       wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[1]")).click();

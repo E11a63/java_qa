@@ -1,40 +1,128 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactsData {
+
   @Expose
+//  @Column(name = "group_name")
+  @Transient
   private String group;
   @Expose
+  @Column(name = "firstname")
   private String firstName;
+  @Column(name = "middlename")
   private String mname;
   @Expose
+  @Column(name = "lastname")
   private String lname;
+  @Column(name = "nickname")
   private String nickname;
   private String title;
   private String company;
+  @Type(type = "text")
   private String address;
+  @Column(name = "home")
+  @Type(type = "text")
   private String hometel;
+  @Column(name = "mobile")
+  @Type(type = "text")
+
   private String mobiltel;
+  @Column(name = "work")
+
+  @Type(type = "text")
   private String worktel;
+  @Type(type = "text")
   private String fax;
+  @Column(name = "email")
+  @Type(type = "text")
   private String email;
+  @Column(name = "email3")
+  @Type(type = "text")
   private String email3;
+  @Column(name = "email2")
+  @Type(type = "text")
   private String email2;
+  @Type(type = "text")
   private String homepage;
+  @Id
+  @Column(name = "id")
   private int id = Integer.MAX_VALUE;
+  @Transient
   private String allPhones;
+  @Transient
   private String allEmails;
-   private File photo;
+  @Column(name = "photo")
+  @Type(type = "text")
+
+  private String photo;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactsData that = (ContactsData) o;
+
+    if (id != that.id) return false;
+    if (group != null ? !group.equals(that.group) : that.group != null) return false;
+    if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+    if (mname != null ? !mname.equals(that.mname) : that.mname != null) return false;
+    if (lname != null ? !lname.equals(that.lname) : that.lname != null) return false;
+    if (nickname != null ? !nickname.equals(that.nickname) : that.nickname != null) return false;
+    if (title != null ? !title.equals(that.title) : that.title != null) return false;
+    if (company != null ? !company.equals(that.company) : that.company != null) return false;
+    if (address != null ? !address.equals(that.address) : that.address != null) return false;
+    if (hometel != null ? !hometel.equals(that.hometel) : that.hometel != null) return false;
+    if (mobiltel != null ? !mobiltel.equals(that.mobiltel) : that.mobiltel != null) return false;
+    if (worktel != null ? !worktel.equals(that.worktel) : that.worktel != null) return false;
+    if (fax != null ? !fax.equals(that.fax) : that.fax != null) return false;
+    if (email != null ? !email.equals(that.email) : that.email != null) return false;
+    if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
+    if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
+    if (homepage != null ? !homepage.equals(that.homepage) : that.homepage != null) return false;
+    if (allPhones != null ? !allPhones.equals(that.allPhones) : that.allPhones != null) return false;
+    if (allEmails != null ? !allEmails.equals(that.allEmails) : that.allEmails != null) return false;
+    return photo.equals(that.photo);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = group != null ? group.hashCode() : 0;
+    result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+    result = 31 * result + (mname != null ? mname.hashCode() : 0);
+    result = 31 * result + (lname != null ? lname.hashCode() : 0);
+    result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+    result = 31 * result + (title != null ? title.hashCode() : 0);
+    result = 31 * result + (company != null ? company.hashCode() : 0);
+    result = 31 * result + (address != null ? address.hashCode() : 0);
+    result = 31 * result + (hometel != null ? hometel.hashCode() : 0);
+    result = 31 * result + (mobiltel != null ? mobiltel.hashCode() : 0);
+    result = 31 * result + (worktel != null ? worktel.hashCode() : 0);
+    result = 31 * result + (fax != null ? fax.hashCode() : 0);
+    result = 31 * result + (email != null ? email.hashCode() : 0);
+    result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+    result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+    result = 31 * result + (homepage != null ? homepage.hashCode() : 0);
+    result = 31 * result + id;
+    result = 31 * result + (allPhones != null ? allPhones.hashCode() : 0);
+    result = 31 * result + (allEmails != null ? allEmails.hashCode() : 0);
+    return result;
+  }
 
   public File getPhoto() {
-    return photo;
+    return new File(photo);
   }
 
   public ContactsData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
@@ -215,26 +303,6 @@ public class ContactsData {
             ", name='" + firstName + '\'' +
             ", lname='" + lname + '\'' +
             '}';
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    ContactsData that = (ContactsData) o;
-
-    if (id != that.id) return false;
-    if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-    return lname != null ? lname.equals(that.lname) : that.lname == null;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = firstName != null ? firstName.hashCode() : 0;
-    result = 31 * result + (lname != null ? lname.hashCode() : 0);
-    result = 31 * result + id;
-    return result;
   }
 
   public String getAllPhones() {
