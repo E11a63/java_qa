@@ -10,46 +10,60 @@ import java.io.File;
 @Table(name = "addressbook")
 public class ContactsData {
 
-  @Expose
+ @Expose
 //  @Column(name = "group_name")
   @Transient
   private String group;
   @Expose
   @Column(name = "firstname")
   private String firstName;
+  @Transient
   @Column(name = "middlename")
   private String mname;
   @Expose
   @Column(name = "lastname")
   private String lname;
+  @Transient
   @Column(name = "nickname")
+
   private String nickname;
+  @Transient
   private String title;
+  @Transient
   private String company;
   @Type(type = "text")
+  @Transient
   private String address;
   @Column(name = "home")
+  @Transient
   @Type(type = "text")
   private String hometel;
+  @Transient
   @Column(name = "mobile")
   @Type(type = "text")
 
   private String mobiltel;
+  @Transient
   @Column(name = "work")
 
   @Type(type = "text")
   private String worktel;
+  @Transient
   @Type(type = "text")
   private String fax;
+  @Transient
   @Column(name = "email")
   @Type(type = "text")
   private String email;
+  @Transient
   @Column(name = "email3")
   @Type(type = "text")
   private String email3;
+  @Transient
   @Column(name = "email2")
   @Type(type = "text")
   private String email2;
+  @Transient
   @Type(type = "text")
   private String homepage;
   @Id
@@ -59,6 +73,7 @@ public class ContactsData {
   private String allPhones;
   @Transient
   private String allEmails;
+  @Transient
   @Column(name = "photo")
   @Type(type = "text")
 
