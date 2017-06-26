@@ -73,11 +73,6 @@ public class ContactsData {
   private String allPhones;
   @Transient
   private String allEmails;
-  @Transient
-  @Column(name = "photo")
-  @Type(type = "text")
-
-  private String photo;
 
   @Override
   public boolean equals(Object o) {
@@ -87,7 +82,6 @@ public class ContactsData {
     ContactsData that = (ContactsData) o;
 
     if (id != that.id) return false;
-    if (group != null ? !group.equals(that.group) : that.group != null) return false;
     if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
     if (mname != null ? !mname.equals(that.mname) : that.mname != null) return false;
     if (lname != null ? !lname.equals(that.lname) : that.lname != null) return false;
@@ -102,16 +96,12 @@ public class ContactsData {
     if (email != null ? !email.equals(that.email) : that.email != null) return false;
     if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
     if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
-    if (homepage != null ? !homepage.equals(that.homepage) : that.homepage != null) return false;
-    if (allPhones != null ? !allPhones.equals(that.allPhones) : that.allPhones != null) return false;
-    if (allEmails != null ? !allEmails.equals(that.allEmails) : that.allEmails != null) return false;
-    return photo.equals(that.photo);
+    return homepage != null ? homepage.equals(that.homepage) : that.homepage == null;
   }
 
   @Override
   public int hashCode() {
-    int result = group != null ? group.hashCode() : 0;
-    result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+    int result = firstName != null ? firstName.hashCode() : 0;
     result = 31 * result + (mname != null ? mname.hashCode() : 0);
     result = 31 * result + (lname != null ? lname.hashCode() : 0);
     result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
@@ -127,10 +117,15 @@ public class ContactsData {
     result = 31 * result + (email2 != null ? email2.hashCode() : 0);
     result = 31 * result + (homepage != null ? homepage.hashCode() : 0);
     result = 31 * result + id;
-    result = 31 * result + (allPhones != null ? allPhones.hashCode() : 0);
-    result = 31 * result + (allEmails != null ? allEmails.hashCode() : 0);
     return result;
   }
+
+  @Transient
+
+  @Column(name = "photo")
+  @Type(type = "text")
+
+  private String photo;
 
   public File getPhoto() {
     return new File(photo);

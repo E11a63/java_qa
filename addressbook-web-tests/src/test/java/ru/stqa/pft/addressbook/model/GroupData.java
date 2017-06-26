@@ -16,6 +16,27 @@ public class GroupData {
   @Column (name = "group_name")
   private String name;
 
+  @Column (name = "group_header")
+  @Type(type = "text")
+
+  private String header;
+  @Column (name = "group_footer")
+  @Type(type = "text")
+  private String footer;
+  @XStreamOmitField
+  @Id
+  @Column (name = "group_id")
+  private int id = Integer.MAX_VALUE;
+
+  public int getId() {
+    return id;
+  }
+
+  public GroupData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -36,27 +57,6 @@ public class GroupData {
     result = 31 * result + (footer != null ? footer.hashCode() : 0);
     result = 31 * result + id;
     return result;
-  }
-
-  @Column (name = "group_header")
-  @Type(type = "text")
-
-  private String header;
-  @Column (name = "group_footer")
-  @Type(type = "text")
-  private String footer;
-  @XStreamOmitField
-  @Id
-  @Column (name = "group_id")
-  private int id = Integer.MAX_VALUE;
-
-  public int getId() {
-    return id;
-  }
-
-  public GroupData withId(int id) {
-    this.id = id;
-    return this;
   }
 
   public GroupData withName(String name) {

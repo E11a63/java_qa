@@ -13,7 +13,7 @@ import static org.testng.Assert.assertEquals;
 public class ContactModificationTests extends TestsBase {
   @BeforeMethod
   public void ensurePreconditions() {
-    if (app.contact().all().size() == 0){
+    if (app.db().contacts().size() == 0){
       app.goTo().HomePage(app);
     app.contact().create(new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").withGroup("name"));
     app.goTo().HomePage(app);
