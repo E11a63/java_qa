@@ -20,7 +20,7 @@ public class CheckContactFormTests extends TestsBase {
   public void ensurePreconditions() {
     app.goTo().HomePage(app);
     if (app.contact().all().size() == 0) {
-      app.contact().create(new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").withGroup("name").withHomeAddress("Почтовый адрес").withEmail("111@").withEmail2("222@").withEmail3("333@").withHometel("+7 111").withMobiltel("+7-222").withWorktel("8(333)")); // добавить заполнение полей
+//      app.contact().create(new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").withGroup("name").withHomeAddress("Почтовый адрес").withEmail("111@").withEmail2("222@").withEmail3("333@").withHometel("+7 111").withMobiltel("+7-222").withWorktel("8(333)")); // добавить заполнение полей
       app.goTo().HomePage(app);
     }
   }

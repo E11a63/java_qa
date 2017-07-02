@@ -19,7 +19,7 @@ public class ContactsDeleteTests extends TestsBase {
   public void ensurePreconditions() {
     if (app.db().contacts().size() == 0) {
       app.goTo().HomePage(app);
-      app.contact().create(new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").withGroup("name"));
+//      app.contact().create(new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").withGroup("name"));
     }
   }
 
@@ -29,12 +29,13 @@ public class ContactsDeleteTests extends TestsBase {
     ContactsData deletedContact = before.iterator().next();
     app.contact().delete(deletedContact);
     app.contact().acceptAlert();
-    app.goTo().HomePage(app);// уточнить класс помощник
+    app.goTo().HomePage(app);// TODO уточнить класс помощник
     assertThat(before.size() - 1, equalTo(app.contact().count()));
     Contacts after = app.db().contacts();
     before.remove(deletedContact);
     assertEquals(before, after);
     assertThat(after, equalTo(before.without(deletedContact)));
+    verifyContactListInUI ();
   }
 
 

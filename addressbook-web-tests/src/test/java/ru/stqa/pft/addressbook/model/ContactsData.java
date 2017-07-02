@@ -5,15 +5,14 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
 public class ContactsData {
 
- @Expose
-//  @Column(name = "group_name")
-  @Transient
-  private String group;
+
   @Expose
   @Column(name = "firstname")
   private String firstName;
@@ -32,18 +31,15 @@ public class ContactsData {
   @Transient
   private String company;
   @Type(type = "text")
-  @Transient
   private String address;
   @Column(name = "home")
-  @Transient
   @Type(type = "text")
   private String hometel;
-  @Transient
+
   @Column(name = "mobile")
   @Type(type = "text")
 
   private String mobiltel;
-  @Transient
   @Column(name = "work")
 
   @Type(type = "text")
@@ -51,15 +47,12 @@ public class ContactsData {
   @Transient
   @Type(type = "text")
   private String fax;
-  @Transient
   @Column(name = "email")
   @Type(type = "text")
   private String email;
-  @Transient
   @Column(name = "email3")
   @Type(type = "text")
   private String email3;
-  @Transient
   @Column(name = "email2")
   @Type(type = "text")
   private String email2;
@@ -69,10 +62,24 @@ public class ContactsData {
   @Id
   @Column(name = "id")
   private int id = Integer.MAX_VALUE;
+
   @Transient
   private String allPhones;
+
   @Transient
   private String allEmails;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
+
+  @Transient
+  @Column(name = "photo")
+  @Type(type = "text")
+
+  private String photo;
+  @Transient
+  private String group;
 
   @Override
   public boolean equals(Object o) {
@@ -119,13 +126,6 @@ public class ContactsData {
     result = 31 * result + id;
     return result;
   }
-
-  @Transient
-
-  @Column(name = "photo")
-  @Type(type = "text")
-
-  private String photo;
 
   public File getPhoto() {
     return new File(photo);
@@ -254,6 +254,10 @@ public class ContactsData {
     return group;
   }
 
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
+
   public String getMname() {
     return mname;
   }
@@ -330,6 +334,11 @@ public class ContactsData {
 
   public ContactsData withAllEmails(String allEmails) {
     this.allEmails = allEmails;
+    return this;
+  }
+
+  public ContactsData inGroup(GroupData group) {
+    groups.add(group);
     return this;
   }
 }

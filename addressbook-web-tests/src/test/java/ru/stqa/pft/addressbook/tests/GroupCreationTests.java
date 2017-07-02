@@ -32,7 +32,7 @@ public class GroupCreationTests extends TestsBase {
     XStream xstream = new XStream();
     xstream.processAnnotations(GroupData.class);
     List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
-    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    return groups.stream().map((GroupData g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
 
 
 
@@ -46,6 +46,8 @@ public class GroupCreationTests extends TestsBase {
     assertThat(app.group().count(), equalTo(before.size() + 1));
     Groups after = app.db().groups();
     assertThat(after, equalTo(before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    verifyGroupListInUI ();
+
   }
 
   @Test(enabled = false)

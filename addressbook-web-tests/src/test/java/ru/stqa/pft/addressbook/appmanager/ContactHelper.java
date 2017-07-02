@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.ContactsData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 
@@ -15,16 +16,17 @@ public class ContactHelper extends HelperBase {
 
   private Contacts contactCache = null;
 
-  public ContactHelper(WebDriver wd) {
+  ContactHelper(WebDriver wd) {
     super(wd);
 
   }
 
-  public void creationNewContacts() {
+  private void creationNewContacts() {
     wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
   }
 
-  public void fillContactsForm(ContactsData contactsData, boolean creation) {
+  private void fillContactsForm(ContactsData contactsData, boolean creation) {
+
     type(By.name("firstname"), contactsData.getName());
     type(By.name("middlename"), contactsData.getMname());
     type(By.name("lastname"), contactsData.getLname());
@@ -46,17 +48,21 @@ public class ContactHelper extends HelperBase {
     }
 
     if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactsData.getGroup());
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
+      if (contactsData.getGroups().size() > 0) {
+        Assert.assertTrue(contactsData.getGroups().size() == 1);
+
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactsData.getGroups().iterator().next().getName());
+      } else {
+        Assert.assertFalse(isElementPresent(By.name("new_group")));
+      }
     }
   }
 
-  public void addNewContacts() {
+  private void addNewContacts() {
     click(By.linkText("add new"));
   }
 
-  public void delitionContact() {
+  private void delitionContact() {
     wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
   }
 
@@ -64,7 +70,7 @@ public class ContactHelper extends HelperBase {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
 
-  public void selectContactByID(int id) {
+  private void selectContactByID(int id) {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
@@ -72,11 +78,11 @@ public class ContactHelper extends HelperBase {
     wd.findElements(By.xpath(".//td[8]")).get(index).click();
   }
 
-  public void initContactModificationByID(int id) {
+  private void initContactModificationByID(int id) {
     wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
   }
 
-  public void submitContactModification() {
+  private void submitContactModification() {
     wd.findElement(By.xpath("//div[@id='content']/form[1]/input[22]")).click();
   }
 

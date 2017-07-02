@@ -8,9 +8,17 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
+import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.ContactsData;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class TestsBase {
@@ -29,11 +37,34 @@ public class TestsBase {
 
   @BeforeMethod
   public void logTestStart(Method m, Object[] p) {
-    logger.info("Start test" + m.getName() +  " with parametrs " + Arrays.asList(p));
+    logger.info("Start test" + m.getName() + " with parametrs " + Arrays.asList(p));
   }
 
   @AfterMethod(alwaysRun = true)
   public void logTestStop(Method m) {
     logger.info("Stop test" + m.getName());
+  }
+
+  public void verifyGroupListInUI() {
+    if (Boolean.getBoolean("verifyUI")) {
+      Groups dbGroups = app.db().groups();
+      Groups uiGroups = app.group().all();
+      assertThat(uiGroups, equalTo(dbGroups.stream()
+              .map((g) -> new GroupData().withId(g.getId()).withName(g.getName()))
+              .collect(Collectors.toSet())));
+    }
+  }
+
+  public void verifyContactListInUI() {
+    if (Boolean.getBoolean("verifyUI")) {
+      Contacts dbContacts = app.db().contacts();
+      Contacts uiContacts = app.contact().all();
+      assertThat(uiContacts, equalTo(dbContacts.stream()
+              .map((c) -> new ContactsData().withId(c.getId()).withName(c.getName()).withLname(c.getLname()).withHomeAddress(c.getAddress()).withAllPhones(Arrays.asList(c.getHometel(),c.getWorktel(),c.getMobiltel()).stream().filter((s) -> !s.equals(""))
+                      .map(CheckContactFormTests::cleanedPhone)
+                      .collect(Collectors.joining("\n"))).withAllEmails(Arrays.asList(c.getEmail(), c.getEmail2(), c.getEmail3())
+                      .stream().filter((s) -> !s.equals(""))
+                      .collect(Collectors.joining("\n")))).collect(Collectors.toSet())));
+    }
   }
 }
