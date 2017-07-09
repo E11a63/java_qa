@@ -24,20 +24,21 @@ public class ContactToGroupTests extends TestsBase {
 
   @Test(enabled = false)
   public void ContactToGroup() {
- /*   ContactsData contact = app.db().contacts().iterator().next();
-    Groups contactGroups = contact.getGroups();
+ //ContactsData contact = app.db().contacts().iterator().next();
+    //Groups contactGroups = contact.getGroups();
     Groups allGroups = app.db().groups();
+    //Сontacts allContacrs
     // if (equals(contactGroups,allGroups)){
     app.goTo().groupPage();
     Groups extendedGroups =allGroups.withAdded(app.group().create(new GroupData().withName("name")));
-    GroupData group = extendedGroups.stream().max((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
+    // GroupData group = extendedGroups.stream().max((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
 
-   System.out.println(newGroup.getId());
-    System.out.println(newGroup);
-    System.out.println(allGroups);
+    // System.out.println(newGroup.getId());
+    // System.out.println(newGroup);
+    // System.out.println(allGroups);
 
-  }*/
-    System.out.println("exit");
+    // }*/
+  // System.out.println("exit");
   }
 
 }

@@ -28,7 +28,7 @@ public class ContactRemoveFromGroup extends TestsBase {
   @Test
   public void ContactRemoveFromGroup() {
 
-    app.contact().selectContact();
+//    app.contact().selectContact();
   }
 }
 
