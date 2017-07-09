@@ -20,7 +20,6 @@ public class ApplicationManager {
   private WebDriver wd;
   private String browser;
   private RegistrationHelper registrationHelper;
-  private ResetPasswordHelper resetPasswordHelper;
   private FtpHelper ftp;
   private MailHelper mailHelper;
   private LoginHelper loginHelper;
@@ -68,12 +67,7 @@ public class ApplicationManager {
     return loginHelper;
   }
 
-  public ResetPasswordHelper resetPassword(){
-    if (resetPasswordHelper==null){
-      resetPasswordHelper=new ResetPasswordHelper(this);
-    }
-    return resetPasswordHelper;
-  }
+
 
   public FtpHelper ftp(){
     if (ftp==null){
