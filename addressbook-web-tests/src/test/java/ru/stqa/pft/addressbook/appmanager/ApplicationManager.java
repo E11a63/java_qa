@@ -50,7 +50,7 @@ public class ApplicationManager {
     } else {
       DesiredCapabilities capabilities = new DesiredCapabilities();
       capabilities.setBrowserName(browser);
-      capabilities.setPlatform(Platform.fromString(System.getProperty("platform","win8")));
+      capabilities.setPlatform(Platform.fromString(System.getProperty("platform","WIN8_1")));
       wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")),capabilities);
     }
     wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
