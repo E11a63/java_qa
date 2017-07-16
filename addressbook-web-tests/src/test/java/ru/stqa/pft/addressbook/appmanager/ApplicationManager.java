@@ -43,8 +43,8 @@ public class ApplicationManager {
       if (browser.equals(BrowserType.FIREFOX)) {
         wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary("D:\\Java_QA\\Mozilla Firefox\\firefox_for.exe"));
       }
-      if (browser.equals(BrowserType.FIREFOX_PROXY)) {
-        wd = new FirefoxDriver();
+      if(browser.equals("firefox_linux")) {
+        wd = new FirefoxDriver(new FirefoxOptions().setBinary("firefox"));
       }
       else if (browser.equals(BrowserType.CHROME)) {
         wd = new ChromeDriver();
