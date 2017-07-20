@@ -24,18 +24,17 @@ public class ApplicationManager {
   private MailHelper mailHelper;
   private LoginHelper loginHelper;
   private SoapHelper soapHelper;
+  private DbHelper db;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
     properties = new Properties();
-
   }
 
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
   }
-
 
   public void searchForm() {
     wd.findElement(By.name("searchform")).click();
@@ -54,7 +53,6 @@ public class ApplicationManager {
   public String getProperty(String key) {
     return properties.getProperty(key);
   }
-
   public RegistrationHelper registration() {
     if (registrationHelper == null) {
       registrationHelper = new RegistrationHelper(this);
@@ -103,5 +101,11 @@ public class ApplicationManager {
       soapHelper = new SoapHelper(this);
     }
     return soapHelper;
+  }
+  public DbHelper db(){
+    if (db==null){
+      db= new DbHelper(this);
+    }
+    return db;
   }
 }
