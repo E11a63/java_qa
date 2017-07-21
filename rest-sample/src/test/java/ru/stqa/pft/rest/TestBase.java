@@ -16,12 +16,14 @@ import static com.jayway.jsonpath.JsonPath.read;
 
 public class TestBase {
   public boolean isIssueOpen(int issueId) throws IOException {
-    String status = getIssueStatusById(5);
-    if (!status.equals("resolved") || !status.equals("closed")) {
+    String status = getIssueStatusById(issueId);
+    if (status.equals("Resolved") || status.equals("Closed")) {
+
+
+      return false;
+    } else {
       System.out.println("Issue is open");
       return true;
-    } else {
-      return false;
     }
   }
 
