@@ -6,7 +6,10 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.model.MailMessage;
 
 import javax.mail.MessagingException;
+import javax.xml.rpc.ServiceException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,9 +23,12 @@ public class ResetPasswordTests extends TestsBase {
     app.mail().start();
   }
 
-  @Test
-  public void ResetPassword() throws IOException, MessagingException, SQLException {
 
+
+
+  @Test
+  public void ResetPassword() throws IOException, MessagingException, SQLException, ServiceException {
+    skipIfNotFixed(1);
     app.login().userLogin("administrator", "root");
     String user=app.db().getUserName();
     app.registration().reset(user);
