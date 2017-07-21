@@ -2,9 +2,13 @@ package ru.stqa.pft.addressbook.tests;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.ContactsData;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
+
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class ContactToGroupTests extends TestsBase {
   @BeforeMethod
@@ -17,28 +21,24 @@ public class ContactToGroupTests extends TestsBase {
       }
       Groups groups = app.db().groups();
       app.goTo().HomePage(app);
-      app.contact().create(new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").inGroup(groups.iterator().next()));
+      app.contact().create(new ContactsData().withName("Первый").withMname("Первович").withLname("Первов").inGroup(groups.iterator().next()),true);
       app.goTo().HomePage(app);
     }
   }
 
-  @Test(enabled = false)
-  public void ContactToGroup() {
- //ContactsData contact = app.db().contacts().iterator().next();
-    //Groups contactGroups = contact.getGroups();
-    Groups allGroups = app.db().groups();
-    //Сontacts allContacrs
-    // if (equals(contactGroups,allGroups)){
-    app.goTo().groupPage();
-    Groups extendedGroups =allGroups.withAdded(app.group().create(new GroupData().withName("name")));
-    // GroupData group = extendedGroups.stream().max((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
-
-    // System.out.println(newGroup.getId());
-    // System.out.println(newGroup);
-    // System.out.println(allGroups);
-
-    // }*/
-  // System.out.println("exit");
+  @Test(enabled = true)
+  public void testContactToGroup() {
+    Groups groups = app.db().groups();
+    Contacts before = app.db().contacts();
+    ContactsData modifiedContact = before.iterator().next();
+    ContactsData contact = new ContactsData().withId(modifiedContact.getId()).inGroup(groups.iterator().next());
+    app.goTo().HomePage(app);
+    app.contact().groupToAdd(contact);
+    app.goTo().HomePage(app);
+    assertThat(app.contact().count(), equalTo(before.size()));
+    Contacts after = app.db().contacts();
+    assertThat(after, equalTo(before.without(contact)));
+    verifyContactListInUI();
   }
 
 }

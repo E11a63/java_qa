@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.ContactsData;
-import ru.stqa.pft.addressbook.model.Groups;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -91,7 +91,7 @@ public class ContactHelper extends HelperBase {
     wd.switchTo().alert().accept();
   }
 
-  public void create(ContactsData contact) {
+  public void create(ContactsData contact,boolean create) {
     addNewContacts();
     fillContactsForm(contact, true);
     creationNewContacts();
@@ -154,5 +154,44 @@ public class ContactHelper extends HelperBase {
     return new ContactsData().withId(contact.getId()).withFirstName(firstname).withLname(lastname)
             .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work)
             .withHomeAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
+  }
+  public void groupToAdd(ContactsData contact) {
+    selectContactByID(contact.getId());
+    selectGroupToAdd(contact);
+    addContactToGroup();
+    contactCache = null;
+  }
+
+  public void excludeFromGroup(ContactsData contact, GroupData deletedGroup) {
+    selectGroupToExclude(contact);
+    selectContactByID(contact.getId());
+    excludeContactFromGroup();
+    contactCache = null;
+        ;
+  }
+  public void selectGroupToAdd(ContactsData contactsData) {
+    if (contactsData.getGroups().size() > 0) {
+      Assert.assertTrue(contactsData.getGroups().size() >= 1);
+      new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(contactsData.getGroups().iterator().next().getName());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("to_group")));
+    }
+  }
+
+  public void selectGroupToExclude(ContactsData contactsData) {
+    if (contactsData.getGroups().size() > 0) {
+      Assert.assertTrue(contactsData.getGroups().size() >= 1);
+      new Select(wd.findElement(By.name("group"))).selectByVisibleText(contactsData.getGroups().iterator().next().getName());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("group")));
+    }
+  }
+
+  private void addContactToGroup() {
+    click(By.name("add"));
+  }
+
+  private void excludeContactFromGroup() {
+    click(By.name("remove"));
   }
 }

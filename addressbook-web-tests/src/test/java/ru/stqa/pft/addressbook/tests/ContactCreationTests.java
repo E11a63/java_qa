@@ -70,7 +70,7 @@ public class ContactCreationTests extends TestsBase {
     }
     app.goTo().HomePage(app);
 
-    app.contact().create(newContact);
+    app.contact().create(newContact,true);
     app.goTo().HomePage(app);
  //   assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();

@@ -44,6 +44,11 @@ public class GroupData {
   }
 
 
+  public GroupData withName(String name) {
+    this.name = name;
+    return this;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -64,11 +69,6 @@ public class GroupData {
     result = 31 * result + (footer != null ? footer.hashCode() : 0);
     result = 31 * result + id;
     return result;
-  }
-
-  public GroupData withName(String name) {
-    this.name = name;
-    return this;
   }
 
   public GroupData withHeader(String header) {

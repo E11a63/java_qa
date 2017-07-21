@@ -73,14 +73,6 @@ public class ContactsData {
   @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
   private Set<GroupData> groups = new HashSet<GroupData>();
 
-  @Transient
-  @Column(name = "photo")
-  @Type(type = "text")
-
-  private String photo;
-  @Transient
-  private String group;
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -103,7 +95,8 @@ public class ContactsData {
     if (email != null ? !email.equals(that.email) : that.email != null) return false;
     if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
     if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
-    return homepage != null ? homepage.equals(that.homepage) : that.homepage == null;
+    if (homepage != null ? !homepage.equals(that.homepage) : that.homepage != null) return false;
+    return group != null ? group.equals(that.group) : that.group == null;
   }
 
   @Override
@@ -124,8 +117,17 @@ public class ContactsData {
     result = 31 * result + (email2 != null ? email2.hashCode() : 0);
     result = 31 * result + (homepage != null ? homepage.hashCode() : 0);
     result = 31 * result + id;
+    result = 31 * result + (group != null ? group.hashCode() : 0);
     return result;
   }
+
+  @Transient
+  @Column(name = "photo")
+  @Type(type = "text")
+
+  private String photo;
+  @Transient
+  private String group;
 
   public File getPhoto() {
     return new File(photo);
@@ -341,6 +343,7 @@ public class ContactsData {
     groups.add(group);
     return this;
   }
+
 }
 
 
